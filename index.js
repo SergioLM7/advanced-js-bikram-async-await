@@ -123,41 +123,42 @@ const getRandomPokemonImage = async () => {
 //6.- Declara una función printPugVsPikachu que pinte la batalla entre "Pug" y "Pikachu" (no se testea)
 const printPugVsPikachu = async () => {
     try {
-      const respuesta1 = fetch(`https://pokeapi.co/api/v2/pokemon/pikachu`, {
-        method: 'GET',
-      });
-      const respuesta2 = fetch(`https://dog.ceo/api/breed/pug/images/random`, {
-        method: 'GET',
-      });
-  
-      const respuestas = await Promise.all([respuesta1, respuesta2]);
-  
-      if (!respuestas[0].ok || !respuestas[1].ok) {
-        return Promise.reject(
-          new Error(`¡Error HTTP! Estado: ${respuestas.status}`)
-        );
-      } else {
-        let respuesta1OK = await respuestas[0].json();
-        let respuesta2OK = await respuestas[1].json();
-  
-        let imgPikachu = respuesta1OK.sprites.front_default;
-        let namePikachu = respuesta1OK.name;
-        const bodyHTML = document.querySelector('body');
-        const imgHTML = document.createElement('img');
-        const imgPug = document.createElement('img');
-        const h3PikachuPug = document.createElement('h3');
-        h3PikachuPug.innerHTML = `La batalla entre ${namePikachu} y Pug`;
-        imgHTML.src = imgPikachu;
-        imgPug.src = respuesta2OK.message;
-  
-        bodyHTML.append(h3PikachuPug, imgHTML, imgPug);
-      }
+        const respuesta1 = fetch(`https://pokeapi.co/api/v2/pokemon/pikachu`, {
+            method: 'GET',
+        });
+        const respuesta2 = fetch(`https://dog.ceo/api/breed/pug/images/random`, {
+            method: 'GET',
+        });
+
+        const respuestas = await Promise.all([respuesta1, respuesta2]);
+
+        if (!respuestas[0].ok || !respuestas[1].ok) {
+            return Promise.reject(
+                new Error(`¡Error HTTP! Estado: ${respuestas.status}`)
+            );
+        } else {
+            let respuesta1OK = await respuestas[0].json();
+            let respuesta2OK = await respuestas[1].json();
+
+            let imgPikachu = respuesta1OK.sprites.front_default;
+            let namePikachu = respuesta1OK.name;
+            const bodyHTML = document.querySelector('body');
+            const divNuevo = document.createElement('div');
+            const imgHTML = document.createElement('img');
+            const imgPug = document.createElement('img');
+            const h3PikachuPug = document.createElement('h3');
+            h3PikachuPug.innerHTML = `La batalla entre ${namePikachu} y Pug`;
+            imgHTML.src = imgPikachu;
+            imgPug.src = respuesta2OK.message;
+            divNuevo.append(h3PikachuPug, imgHTML, imgPug)
+            bodyHTML.append(divNuevo);
+        }
     } catch (error) {
-      throw console.log(`Este es el error: ${error}`);
+        throw console.log(`Este es el error: ${error}`);
     }
-  };
-  
-  printPugVsPikachu();
+};
+
+printPugVsPikachu();
 
 //7.- Declara una función **getRandomCharacter** que retorne un personaje aleatorio. 
 const getRandomCharacter = async () => {
@@ -228,48 +229,52 @@ const getRandomCharacterInfo = async () => {
 const paintRandomCharacterInfo = async () => {
     const numeroAleatorio = Math.floor(Math.random() * 826);
     try {
-      const respuesta = await fetch(
-        `https://rickandmortyapi.com/api/character/${numeroAleatorio}`,
-        {
-          method: 'GET',
-        }
-      );
-  
-      if (!respuesta.ok) {
-        return Promise.reject(
-          new Error(`¡Error HTTP! Estado: ${respuesta.status}`)
+        const respuesta = await fetch(
+            `https://rickandmortyapi.com/api/character/${numeroAleatorio}`,
+            {
+                method: 'GET',
+            }
         );
-      } else {
-        let respuestaOK = await respuesta.json();
-        let img = respuestaOK.image;
-        let name = respuestaOK.name;
-        let episodes = respuestaOK.episode;
-        const respuesta2 = await fetch(`${episodes[0]}`, {
-          method: 'GET',
-        });
-        if (!respuesta2.ok) {
-          return Promise.reject(
-            new Error(`¡Error HTTP! Estado: ${respuesta.status}`)
-          );
-        } else {
-          let respuesta2OK = await respuesta2.json();
-          let firstEpisode = respuesta2OK.name;
-          let dateEpisode = respuesta2OK.air_date;
-          
-          const bodyHTML = document.querySelector('body');
-          const imgHTML = document.createElement('img');
-          const h3Personaje = document.createElement('h3');
-          const listaDatos = document.createElement('UL');
-          listaDatos.innerHTML = `<li>First episode: ${firstEpisode}</li><li>Date of first episode: ${dateEpisode}</li>`;
-          h3Personaje.innerHTML = name;
-          imgHTML.src= img;
-          bodyHTML.append(imgHTML, h3Personaje, listaDatos);  
-          return ({ img, name, episodes, firstEpisode, dateEpisode })
-        }
-      }
-    } catch (error) {
-      throw console.log(`Este es el error: ${error}`);
-    }
-  };
 
-  paintRandomCharacterInfo();
+        if (!respuesta.ok) {
+            return Promise.reject(
+                new Error(`¡Error HTTP! Estado: ${respuesta.status}`)
+            );
+        } else {
+            let respuestaOK = await respuesta.json();
+            let img = respuestaOK.image;
+            let name = respuestaOK.name;
+            let episodes = respuestaOK.episode;
+            const respuesta2 = await fetch(`${episodes[0]}`, {
+                method: 'GET',
+            });
+            if (!respuesta2.ok) {
+                return Promise.reject(
+                    new Error(`¡Error HTTP! Estado: ${respuesta.status}`)
+                );
+            } else {
+                let respuesta2OK = await respuesta2.json();
+                let firstEpisode = respuesta2OK.name;
+                let dateEpisode = respuesta2OK.air_date;
+
+
+                const bodyHTML = document.querySelector('body');
+                const imgHTML = document.createElement('img');
+                const h3Personaje = document.createElement('h3');
+                const listaDatos = document.createElement('UL');
+                const divNuevo = document.createElement('div');
+                listaDatos.innerHTML = `<li>First episode: ${firstEpisode}</li><li>Date of first episode: ${dateEpisode}</li>`;
+                h3Personaje.innerHTML = name;
+                imgHTML.src = img;
+                divNuevo.append(h3Personaje, imgHTML, listaDatos)
+                bodyHTML.append(divNuevo);
+
+                return ({ img, name, episodes, firstEpisode, dateEpisode })
+            }
+        }
+    } catch (error) {
+        throw console.log(`Este es el error: ${error}`);
+    }
+};
+
+paintRandomCharacterInfo();
