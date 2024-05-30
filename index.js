@@ -52,7 +52,7 @@ const getImageAndName = async (pokemon) => {
 const printImageAndName = async () => {
     try {
         const respuesta = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/pikachu`,
+            `https://pokeapi.co/api/v2/pokemon/squirtle`,
             {
                 method: 'GET',
             }
